@@ -36,7 +36,7 @@
             'transparent':{
                 'context': context()
             }, 'validation':[]}">
-            <!-- ko template: 'OnTap_MasterCard/payment/hpf-cc-form' --><!-- /ko -->
+            <div data-bind="template: { name: 'OnTap_MasterCard/payment/hpf-cc-form' }, afterRender: loadAdapter"></div>
             <!-- ko if: (isVaultEnabled())-->
             <div class="field choice">
                 <input type="checkbox"

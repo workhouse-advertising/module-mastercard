@@ -159,7 +159,7 @@ define(
 
             onActiveChange: function (isActive) {
                 if (isActive && !this.adapterLoaded()) {
-                    this.loadAdapter();
+                    // this.loadAdapter();
                 }
             },
 
