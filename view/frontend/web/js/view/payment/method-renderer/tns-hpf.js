@@ -171,7 +171,8 @@ define(
 
             loadAdapter: function () {
                 var config = this.getConfig();
-                require([config.component_url], this.paymentAdapterLoaded.bind(this));
+                // TODO: Make the `debug` option based on whether or not the module has debug enabled and not hard-coded like this.
+                require([config.component_url + '?debug=true'], this.paymentAdapterLoaded.bind(this));
             },
 
             isCheckoutDisabled: function () {
