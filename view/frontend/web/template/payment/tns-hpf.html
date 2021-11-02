@@ -36,7 +36,8 @@
             'transparent':{
                 'context': context()
             }, 'validation':[]}">
-            <div data-bind="template: { name: 'OnTap_MasterCard/payment/hpf-cc-form' }, afterRender: loadAdapter"></div>
+            <span data-bind="text: paymentSessionError, visible: paymentSessionError" class="field-error"></span>
+            <div data-bind="template: { name: 'OnTap_MasterCard/payment/hpf-cc-form' }, afterRender: loadAdapter, visible: !paymentSessionError()"></div>
             <!-- ko if: (isVaultEnabled())-->
             <div class="field choice">
                 <input type="checkbox"

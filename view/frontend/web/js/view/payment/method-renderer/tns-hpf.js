@@ -16,6 +16,7 @@
 /*global define*/
 define(
     [
+        'ko',
         'jquery',
         'Magento_Checkout/js/view/payment/default',
         'Magento_Checkout/js/model/payment/additional-validators',
@@ -26,6 +27,7 @@ define(
         'Magento_Vault/js/view/payment/vault-enabler'
     ],
     function (
+        ko,
         $,
         ccFormComponent,
         additionalValidators,
@@ -51,6 +53,7 @@ define(
                 creditCardExpYear: '',
                 creditCardExpMonth: ''
             },
+            paymentSessionError:  ko.observable(false),
             placeOrderHandler: null,
             validateHandler: null,
             sessionId: null,
@@ -171,8 +174,7 @@ define(
 
             loadAdapter: function () {
                 var config = this.getConfig();
-                // TODO: Make the `debug` option based on whether or not the module has debug enabled and not hard-coded like this.
-                require([config.component_url + '?debug=true'], this.paymentAdapterLoaded.bind(this));
+                require([config.component_url], this.paymentAdapterLoaded.bind(this));
             },
 
             isCheckoutDisabled: function () {
@@ -187,9 +189,16 @@ define(
                     fields: this.getCardFields(),
                     frameEmbeddingMitigation: ['x-frame-options'],
                     callbacks: {
-                        initialized: function () {
-                            this.adapterLoaded(true);
-                            this.isPlaceOrderActionAllowed(true);
+                        initialized: function (response) {
+                            if (response.status != 'ok') {
+                                var message = response.message || 'Something went wrong initialising this payment method.';
+                                this.paymentSessionError('ERROR: ' + message);
+                                console.error(response);
+                            } else {
+                                this.adapterLoaded(true);
+                                this.isPlaceOrderActionAllowed(true);
+                                this.paymentSessionError(false);
+                            }
                         }.bind(this),
                         formSessionUpdate: this.formSessionUpdate.bind(this)
                     }

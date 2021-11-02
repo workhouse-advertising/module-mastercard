@@ -70,12 +70,13 @@ class Config extends \OnTap\MasterCard\Gateway\Config\Config implements ConfigIn
      */
     public function getComponentUrl()
     {
+        $debug = (bool) $this->getValue('debug');
         return sprintf(
             static::COMPONENT_URI,
             $this->getApiAreaUrl(),
             $this->getValue('api_version'),
             $this->getMerchantId()
-        );
+        ) . ($debug ? '?debug=true' : '');
     }
 
     /**
