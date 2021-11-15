@@ -193,7 +193,7 @@ define(
                     fields: this.getCardFields(),
                     frameEmbeddingMitigation: ['x-frame-options'],
                     callbacks: {
-                        initialized: function () {
+                        initialized: function (response) {
                             if (response.status != 'ok') {
                                 var message = response.message || 'Something went wrong initialising this payment method.';
                                 this.paymentSessionError('ERROR: ' + message);
