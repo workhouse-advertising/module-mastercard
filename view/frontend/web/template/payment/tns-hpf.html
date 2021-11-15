@@ -36,6 +36,7 @@
             'transparent':{
                 'context': context()
             }, 'validation':[]}">
+            <span data-bind="text: paymentSessionError, visible: paymentSessionError" class="field-error"></span>
             <!-- ko template: 'OnTap_MasterCard/payment/hpf-cc-form' --><!-- /ko -->
             <!-- ko if: (isVaultEnabled())-->
             <div class="field choice">
